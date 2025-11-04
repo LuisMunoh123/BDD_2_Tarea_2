@@ -2,7 +2,8 @@ from litestar.app import Litestar
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.plugins import ScalarRenderPlugin, SwaggerRenderPlugin
 
-from app.controllers import BookController, UserController
+from app.controllers.book import BookController
+from app.controllers.user import UserController
 from app.db import sqlalchemy_plugin
 
 openapi_config = OpenAPIConfig(
