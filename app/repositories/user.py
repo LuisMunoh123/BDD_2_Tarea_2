@@ -1,10 +1,11 @@
 from advanced_alchemy.repository import SQLAlchemySyncRepository
 from litestar.dto import DTOData
+from pwdlib import PasswordHash
 from sqlalchemy.orm import Session
 
 from app.models import User
-from app.security import password_hasher
 
+password_hasher = PasswordHash.recommended()
 
 class UserRepository(SQLAlchemySyncRepository[User]):
     """Repository for user database operations."""

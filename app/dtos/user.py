@@ -24,3 +24,6 @@ class UserUpdateDTO(SQLAlchemyDTO[User]):
         exclude={"id", "created_at", "password", "loans"},
         partial=True,
     )
+
+class UserLoginDTO(SQLAlchemyDTO[User]):
+    config = SQLAlchemyDTOConfig(include={"username", "password"})

@@ -7,6 +7,7 @@ from app.controllers.book import BookController
 from app.controllers.loan import LoanController
 from app.controllers.user import UserController
 from app.db import sqlalchemy_plugin
+from app.security import oauth2_auth
 
 openapi_config = OpenAPIConfig(
     title="Mi API",
@@ -27,4 +28,5 @@ app = Litestar(
     openapi_config=openapi_config,
     debug=True,
     plugins=[sqlalchemy_plugin],
+    on_app_init=[oauth2_auth.on_app_init]
 )

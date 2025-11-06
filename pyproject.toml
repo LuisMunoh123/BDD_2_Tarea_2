@@ -5,6 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "litestar[standard,sqlalchemy]>=2.18.0",
+    "litestar[standard,sqlalchemy,jwt]>=2.18.0",
     "pwdlib[argon2]>=0.3.0",
 ]
