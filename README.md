@@ -17,6 +17,14 @@ uv run litestar --reload     # Inicia el servidor de desarrollo
 # Accede a http://localhost:8000/schema para ver la documentación de la API
 ```
 
+## Variables de entorno
+
+Crea un archivo `.env` basado en `.env.example`:
+
+- `DEBUG`: Modo debug (True/False)
+- `JWT_SECRET_KEY`: Clave secreta para tokens JWT
+- `DATABASE_URL`: URL de conexión a PostgreSQL (formato: `postgresql+psycopg://usuario:contraseña@host:puerto/nombre_bd`). Recuerda crear la base de datos antes de ejecutar la aplicación con `createdb nombre_bd`.
+
 ## Estructura del proyecto
 
 ```
@@ -31,10 +39,17 @@ app/
 migrations/          # Migraciones de Alembic
 ```
 
-## Variables de entorno
+## Crear una copia privada de este repositorio
 
-Crea un archivo `.env` basado en `.env.example`:
+Para crear una copia privada de este repositorio en tu propia cuenta de GitHub, conservando el historial de commits, sigue estos pasos:
 
-- `DEBUG`: Modo debug (True/False)
-- `JWT_SECRET_KEY`: Clave secreta para tokens JWT
-- `DATABASE_URL`: URL de conexión a PostgreSQL (formato: `postgresql+psycopg://usuario:contraseña@host:puerto/nombre_bd`). Recuerda crear la base de datos antes de ejecutar la aplicación con `createdb nombre_bd`.
+- Primero, crea un repositorio privado en tu cuenta de GitHub. Guarda la URL del nuevo repositorio.
+- Luego, ejecuta los siguientes comandos en tu terminal, reemplazando `<URL_DE_TU_REPOSITORIO_PRIVADO>` con la URL de tu nuevo repositorio privado:
+
+  ```bash
+  git clone https://github.com/dialvarezs/learning-vue-bd2-2025 # Clona el repositorio
+  cd learning-vue-bd2-2025
+  git remote remove origin                                      # Elimina el origen remoto existente
+  git remote add origin <URL_DE_TU_REPOSITORIO_PRIVADO>         # Agrega el nuevo origen remoto
+  git push -u origin main                                       # Sube la rama principal al
+  ```
