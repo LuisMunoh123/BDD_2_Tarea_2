@@ -1,3 +1,5 @@
+"""Controller for Book endpoints."""
+
 from typing import Annotated, Sequence
 
 from advanced_alchemy.exceptions import DuplicateKeyError, NotFoundError
@@ -42,13 +44,13 @@ class BookController(Controller):
         data: DTOData[Book],
         books_repo: BookRepository,
     ) -> Book:
+        """Create a new book."""
         # Validar que el año esté entre 1000 y el año actual
         if not (1000 <= data.as_builtins()["published_year"] <= 2024):
             raise HTTPException(
                 detail="El año de publicación debe estar entre 1000 y 2024",
                 status_code=400,
             )
-        """Create a new book."""
         return books_repo.add(data.create_instance())
 
     @patch("/{id:int}", dto=BookUpdateDTO)

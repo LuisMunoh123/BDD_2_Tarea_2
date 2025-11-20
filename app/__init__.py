@@ -1,3 +1,5 @@
+"""Main Litestar application for library management."""
+
 from litestar.app import Litestar
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.plugins import ScalarRenderPlugin, SwaggerRenderPlugin

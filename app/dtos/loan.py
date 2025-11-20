@@ -1,3 +1,5 @@
+"""Data Transfer Objects for Loan endpoints."""
+
 from advanced_alchemy.extensions.litestar import SQLAlchemyDTO, SQLAlchemyDTOConfig
 
 from app.models import Loan

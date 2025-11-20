@@ -1,3 +1,5 @@
+"""Database models for the library management system."""
+
 from dataclasses import dataclass
 from datetime import date, datetime
 
@@ -33,7 +35,7 @@ class Book(BigIntAuditBase):
 
 
 class Loan(BigIntAuditBase):
-    """Loan model with audit fields"""
+    """Loan model with audit fields."""
 
     __tablename__ = "loans"
 

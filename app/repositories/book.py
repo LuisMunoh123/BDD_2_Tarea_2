@@ -1,3 +1,5 @@
+"""Repository for Book database operations."""
+
 from advanced_alchemy.repository import SQLAlchemySyncRepository
 from sqlalchemy.orm import Session
 

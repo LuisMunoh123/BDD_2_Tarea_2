@@ -1,3 +1,5 @@
+"""Repository for Loan database operations."""
+
 from advanced_alchemy.repository import SQLAlchemySyncRepository
 from sqlalchemy.orm import Session
 

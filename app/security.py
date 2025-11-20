@@ -1,3 +1,5 @@
+"""OAuth2 authentication and security configuration."""
+
 from litestar.connection import ASGIConnection
 from litestar.security.jwt import OAuth2PasswordBearerAuth, Token
 
@@ -7,6 +9,7 @@ from app.repositories.user import UserRepository
 
 
 async def retrieve_user_handler(token: Token, _: ASGIConnection) -> User | None:
+    """Retrieve user based on JWT token."""
     from app.db import sqlalchemy_config
 
     with sqlalchemy_config.get_session() as session:

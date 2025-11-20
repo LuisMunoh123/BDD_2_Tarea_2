@@ -1,3 +1,5 @@
+"""Data Transfer Objects for Book endpoints."""
+
 from advanced_alchemy.extensions.litestar import SQLAlchemyDTO, SQLAlchemyDTOConfig
 
 from app.models import Book

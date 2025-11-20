@@ -1,3 +1,5 @@
+"""Controller for User endpoints."""
+
 from typing import Sequence
 
 from advanced_alchemy.exceptions import DuplicateKeyError, NotFoundError

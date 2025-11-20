@@ -1,3 +1,5 @@
+"""Controller for authentication endpoints."""
+
 from typing import Annotated
 
 from litestar import Controller, Response, post
@@ -14,6 +16,8 @@ from app.security import oauth2_auth
 
 
 class AuthController(Controller):
+    """Controller for authentication operations."""
+
     path = "/auth"
     tags = ["auth"]
 
@@ -27,6 +31,7 @@ class AuthController(Controller):
         data: Annotated[User, Body(media_type=RequestEncodingType.URL_ENCODED)],
         users_repo: UserRepository,
     ) -> Response[OAuth2Login]:
+        """Authenticate user and generate OAuth2 token."""
         user = users_repo.get_one_or_none(username=data.username)
 
         if user is not None:

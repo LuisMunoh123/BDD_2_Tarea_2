@@ -1,3 +1,5 @@
+"""Controllers and error handlers for API endpoints."""
+
 from typing import Any
 
 from advanced_alchemy.exceptions import DuplicateKeyError, NotFoundError

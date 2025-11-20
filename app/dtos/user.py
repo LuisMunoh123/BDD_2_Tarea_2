@@ -1,3 +1,5 @@
+"""Data Transfer Objects for User endpoints."""
+
 from advanced_alchemy.extensions.litestar import SQLAlchemyDTO, SQLAlchemyDTOConfig
 
 from app.models import User
@@ -27,4 +29,6 @@ class UserUpdateDTO(SQLAlchemyDTO[User]):
 
 
 class UserLoginDTO(SQLAlchemyDTO[User]):
+    """DTO for user login."""
+
     config = SQLAlchemyDTOConfig(include={"username", "password"})

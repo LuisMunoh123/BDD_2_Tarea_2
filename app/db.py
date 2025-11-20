@@ -1,3 +1,5 @@
+"""Database configuration with SQLAlchemy."""
+
 from advanced_alchemy.extensions.litestar import SQLAlchemyPlugin, SQLAlchemySyncConfig
 
 sqlalchemy_config = SQLAlchemySyncConfig(

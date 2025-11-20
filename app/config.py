@@ -1,7 +1,10 @@
+"""Application configuration using Pydantic Settings."""
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """Main application settings."""
     debug: bool = False
     jwt_secret: str = "secret123"
 
