@@ -29,5 +29,5 @@ app = Litestar(
     openapi_config=openapi_config,
     debug=settings.debug,
     plugins=[sqlalchemy_plugin],
-    on_app_init=[oauth2_auth.on_app_init]
+    on_app_init=[oauth2_auth.on_app_init],
 )

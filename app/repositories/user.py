@@ -7,6 +7,7 @@ from app.models import User
 
 password_hasher = PasswordHash.recommended()
 
+
 class UserRepository(SQLAlchemySyncRepository[User]):
     """Repository for user database operations."""
 

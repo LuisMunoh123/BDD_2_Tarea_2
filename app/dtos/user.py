@@ -25,5 +25,6 @@ class UserUpdateDTO(SQLAlchemyDTO[User]):
         partial=True,
     )
 
+
 class UserLoginDTO(SQLAlchemyDTO[User]):
     config = SQLAlchemyDTOConfig(include={"username", "password"})
