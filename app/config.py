@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Main application settings."""
     debug: bool = False
-    jwt_secret: str = "secret123"
+    jwt_secret_key: str  = "secret123"
     database_url: str = "postgresql+psycopg:///bd2_library_db"
 
     model_config = SettingsConfigDict(
@@ -15,4 +15,4 @@ class Settings(BaseSettings):
     )
 
 
-settings = Settings()  # type: ignore
+settings = Settings()# type: ignore

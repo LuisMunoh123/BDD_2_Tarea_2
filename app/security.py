@@ -23,7 +23,7 @@ async def retrieve_user_handler(token: Token, _: ASGIConnection) -> User | None:
 
 oauth2_auth = OAuth2PasswordBearerAuth[User](
     retrieve_user_handler=retrieve_user_handler,
-    token_secret=settings.jwt_secret,
+    token_secret=settings.jwt_secret_key,
     token_url="/auth/login",
     exclude=["/auth/login", "/schema"],
 )

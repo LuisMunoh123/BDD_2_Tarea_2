@@ -15,7 +15,7 @@ class UserCreateDTO(SQLAlchemyDTO[User]):
     """DTO for creating users."""
 
     config = SQLAlchemyDTOConfig(
-        exclude={"id", "created_at", "updated_at", "loans"},
+        exclude={"id", "created_at", "updated_at", "loans","password"},
     )
 
 

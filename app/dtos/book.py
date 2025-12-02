@@ -15,7 +15,7 @@ class BookCreateDTO(SQLAlchemyDTO[Book]):
     """DTO for creating books."""
 
     config = SQLAlchemyDTOConfig(
-        exclude={"id", "created_at", "updated_at", "loans"},
+        exclude={"id", "created_at", "updated_at", "loans","categories"},
     )
 
 

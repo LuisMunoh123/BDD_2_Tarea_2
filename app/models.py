@@ -4,8 +4,16 @@ from dataclasses import dataclass
 from datetime import date, datetime
 
 from advanced_alchemy.base import BigIntAuditBase
-from sqlalchemy import ForeignKey
+from sqlalchemy import Column, ForeignKey, String, Table, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+
+book_categories = Table(
+    "book_categories",
+    BigIntAuditBase.metadata,
+    Column("book_id", ForeignKey("books.id"), primary_key=True),
+    Column("category_id", ForeignKey("categories.id"), primary_key=True),
+)
 
 
 class User(BigIntAuditBase):
@@ -32,6 +40,29 @@ class Book(BigIntAuditBase):
     published_year: Mapped[int]
 
     loans: Mapped[list["Loan"]] = relationship(back_populates="book")
+
+    # relación many-to-many con Category
+    categories: Mapped[list["Category"]] = relationship(
+        "Category",
+        secondary=book_categories,
+        back_populates="books",
+    )
+
+
+class Category(BigIntAuditBase):
+    """Category model with audit fields."""
+
+    __tablename__ = "categories"
+
+    # BigIntAuditBase ya define id, created_at, updated_at, etc.
+    name: Mapped[str] = mapped_column(String(100), unique=True)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    books: Mapped[list["Book"]] = relationship(
+        "Book",
+        secondary=book_categories,
+        back_populates="categories",
+    )
 
 
 class Loan(BigIntAuditBase):

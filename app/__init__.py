@@ -1,5 +1,6 @@
 """Main Litestar application for library management."""
-
+from app.controllers.category import CategoryController
+from app.dtos.category import CategoryReadDTO, CategoryCreateDTO, CategoryUpdateDTO  # noqa: F401
 from litestar.app import Litestar
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.plugins import ScalarRenderPlugin, SwaggerRenderPlugin
@@ -27,6 +28,7 @@ app = Litestar(
         BookController,
         LoanController,
         AuthController,
+        CategoryController,
     ],
     openapi_config=openapi_config,
     debug=settings.debug,
