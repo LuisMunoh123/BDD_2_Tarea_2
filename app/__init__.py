@@ -9,6 +9,7 @@ from app.config import settings
 from app.controllers.auth import AuthController
 from app.controllers.book import BookController
 from app.controllers.loan import LoanController
+from app.controllers.review import ReviewController
 from app.controllers.user import UserController
 from app.db import sqlalchemy_plugin
 from app.security import oauth2_auth
@@ -29,6 +30,7 @@ app = Litestar(
         LoanController,
         AuthController,
         CategoryController,
+        ReviewController,
     ],
     openapi_config=openapi_config,
     debug=settings.debug,
