@@ -39,6 +39,11 @@ class Book(BigIntAuditBase):
     pages: Mapped[int]
     published_year: Mapped[int]
 
+    stock: Mapped[int] = mapped_column(default=1)
+    description: Mapped[str | None] = mapped_column(nullable=True)
+    language: Mapped[str] = mapped_column()
+    publisher: Mapped[str | None] = mapped_column(nullable=True)
+
     loans: Mapped[list["Loan"]] = relationship(back_populates="book")
     reviews: Mapped[list["Review"]] = relationship(back_populates="book")
     
@@ -85,15 +90,15 @@ class Review(BigIntAuditBase):
 
     __tablename__ = "reviews"
 
-    rating: Mapped[int]
-    comment: Mapped[str]
-    review_date: Mapped[date] = mapped_column(default=date.today)
+    rating: Mapped[int] = mapped_column(nullable=False)
+    comment: Mapped[str | None] = mapped_column(Text, nullable=True)
+    review_date: Mapped[date] = mapped_column(default=datetime.today)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     book_id: Mapped[int] = mapped_column(ForeignKey("books.id"))
 
-    user: Mapped["User"] = relationship(back_populates="reviews")
-    book: Mapped["Book"] = relationship(back_populates="reviews")
+    user: Mapped[User] = relationship(back_populates="reviews")
+    book: Mapped[Book] = relationship(back_populates="reviews")
 
 
 @dataclass

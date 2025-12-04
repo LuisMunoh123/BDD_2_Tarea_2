@@ -45,12 +45,31 @@ class BookController(Controller):
         books_repo: BookRepository,
     ) -> Book:
         """Create a new book."""
+        payload = data.as_builtins()
+
         # Validar que el año esté entre 1000 y el año actual
-        if not (1000 <= data.as_builtins()["published_year"] <= 2024):
+        if not (1000 <= payload["published_year"] <= 2024):
             raise HTTPException(
                 detail="El año de publicación debe estar entre 1000 y 2024",
                 status_code=400,
             )
+
+        # stock debe ser > 0 (si viene explícito; si no, usamos el default = 1)
+        stock = payload.get("stock", 1)
+        if stock is not None and stock <= 0:
+            raise HTTPException(
+                status_code=400,
+                detail="El stock debe ser mayor a 0",
+            )
+
+        # language: código ISO 639-1 de 2 letras. Limitamos a es/en/fr como pide el enunciado.
+        language = payload.get("language")
+        if not isinstance(language, str) or len(language) != 2 or language not in {"es", "en", "fr"}:
+            raise HTTPException(
+                status_code=400,
+                detail="El language debe ser un código ISO 639-1 de 2 letras: 'es', 'en' o 'fr'",
+            )
+
         return books_repo.add(data.create_instance())
 
     @patch("/{id:int}", dto=BookUpdateDTO)
@@ -61,7 +80,25 @@ class BookController(Controller):
         books_repo: BookRepository,
     ) -> Book:
         """Update a book by ID."""
-        book, _ = books_repo.get_and_update(match_fields="id", id=id, **data.as_builtins())
+        payload = data.as_builtins()
+
+        # Si el payload trae stock, validar que NO sea negativo
+        if "stock" in payload and payload["stock"] is not None and payload["stock"] < 0:
+            raise HTTPException(
+                status_code=400,
+                detail="El stock no puede ser negativo",
+            )
+
+        # (Opcional) validar language también en update si viene
+        if "language" in payload and payload["language"] is not None:
+            language = payload["language"]
+            if not isinstance(language, str) or len(language) != 2 or language not in {"es", "en", "fr"}:
+                raise HTTPException(
+                    status_code=400,
+                    detail="El language debe ser un código ISO 639-1 de 2 letras: 'es', 'en' o 'fr'",
+                )
+
+        book, _ = books_repo.get_and_update(match_fields="id", id=id, **payload)
 
         return book
 

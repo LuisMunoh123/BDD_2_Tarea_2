@@ -8,10 +8,7 @@ from app.models import Review
 class ReviewReadDTO(SQLAlchemyDTO[Review]):
     """DTO for reading review data."""
 
-    # Incluir user y book como pide el enunciado
-    config = SQLAlchemyDTOConfig(
-        include={"id", "rating", "comment", "review_date", "user", "book"},
-    )
+    config = SQLAlchemyDTOConfig()
 
 
 class ReviewCreateDTO(SQLAlchemyDTO[Review]):
@@ -22,7 +19,7 @@ class ReviewCreateDTO(SQLAlchemyDTO[Review]):
             "id",
             "created_at",
             "updated_at",
-            "user",   # relaciones fuera del body
+            "user",
             "book",
         },
     )
