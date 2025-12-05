@@ -28,7 +28,7 @@ def upgrade() -> None:
             "stock",
             sa.Integer(),
             nullable=False,
-            server_default="1",  # default en la BD para registros existentes
+            server_default="1",  
         ),
     )
     op.add_column(
@@ -45,7 +45,7 @@ def upgrade() -> None:
             "language",
             sa.String(length=2),
             nullable=False,
-            server_default="es",  # para que los libros existentes no queden en NULL
+            server_default="es",  
         ),
     )
     op.add_column(

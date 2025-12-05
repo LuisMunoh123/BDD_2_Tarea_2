@@ -2,10 +2,18 @@
 
 from dataclasses import dataclass
 from datetime import date, datetime
+from decimal import Decimal
+from enum import Enum
 
 from advanced_alchemy.base import BigIntAuditBase
-from sqlalchemy import Column, ForeignKey, String, Table, Text
+from sqlalchemy import Boolean, Column, Date, Enum as SAEnum, ForeignKey, Numeric, String, Table, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+
+class LoanStatus(str, Enum):
+    ACTIVE = "ACTIVE"
+    RETURNED = "RETURNED"
+    OVERDUE = "OVERDUE"
 
 
 book_categories = Table(
@@ -21,9 +29,15 @@ class User(BigIntAuditBase):
 
     __tablename__ = "users"
 
-    username: Mapped[str] = mapped_column(unique=True)
-    fullname: Mapped[str]
-    password: Mapped[str]
+    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    fullname: Mapped[str] = mapped_column(String, nullable=False)
+    password: Mapped[str] = mapped_column(String, nullable=False)
+
+    # Nuevos campos
+    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    phone: Mapped[str | None] = mapped_column(String, nullable=True)
+    address: Mapped[str | None] = mapped_column(String, nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     loans: Mapped[list["Loan"]] = relationship(back_populates="user")
     reviews: Mapped[list["Review"]] = relationship(back_populates="user")
@@ -76,10 +90,22 @@ class Loan(BigIntAuditBase):
 
     __tablename__ = "loans"
 
-    loan_dt: Mapped[date] = mapped_column(default=datetime.today)
-    return_dt: Mapped[date | None]
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    book_id: Mapped[int] = mapped_column(ForeignKey("books.id"))
+    loan_dt: Mapped[date] = mapped_column(Date, nullable=False, default=datetime.today)
+    return_dt: Mapped[date | None] = mapped_column(Date, nullable=True)
+
+    due_date: Mapped[date | None] = mapped_column(Date, nullable=True)
+    fine_amount: Mapped[Decimal | None] = mapped_column(
+        Numeric(10, 2), nullable=True
+    )
+    status: Mapped[LoanStatus] = mapped_column(
+        SAEnum(LoanStatus, name="loan_status"),
+        default=LoanStatus.ACTIVE,
+        server_default=LoanStatus.ACTIVE.value,
+        nullable=False,
+    )
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    book_id: Mapped[int] = mapped_column(ForeignKey("books.id"), nullable=False)
 
     user: Mapped[User] = relationship(back_populates="loans")
     book: Mapped[Book] = relationship(back_populates="loans")

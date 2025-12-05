@@ -62,12 +62,12 @@ class BookController(Controller):
                 detail="El stock debe ser mayor a 0",
             )
 
-        # language: código ISO 639-1 de 2 letras. Limitamos a es/en/fr como pide el enunciado.
+        # language: código ISO 639-1 de 2 letras
         language = payload.get("language")
-        if not isinstance(language, str) or len(language) != 2 or language not in {"es", "en", "fr"}:
+        if not isinstance(language, str) or len(language) != 2 or not language.isalpha():
             raise HTTPException(
                 status_code=400,
-                detail="El language debe ser un código ISO 639-1 de 2 letras: 'es', 'en' o 'fr'",
+                detail="El language debe ser un código ISO 639-1 de 2 letras (ej: 'es', 'en', 'fr', 'de', 'it', etc.)",
             )
 
         return books_repo.add(data.create_instance())
@@ -92,10 +92,10 @@ class BookController(Controller):
         # (Opcional) validar language también en update si viene
         if "language" in payload and payload["language"] is not None:
             language = payload["language"]
-            if not isinstance(language, str) or len(language) != 2 or language not in {"es", "en", "fr"}:
+            if not isinstance(language, str) or len(language) != 2 or not language.isalpha():
                 raise HTTPException(
                     status_code=400,
-                    detail="El language debe ser un código ISO 639-1 de 2 letras: 'es', 'en' o 'fr'",
+                    detail="El language debe ser un código ISO 639-1 de 2 letras (ej: 'es', 'en', 'fr', 'de', 'it', etc.)",
                 )
 
         book, _ = books_repo.get_and_update(match_fields="id", id=id, **payload)

@@ -1,5 +1,6 @@
 """Controller for User endpoints."""
 
+import re
 from typing import Sequence
 
 from advanced_alchemy.exceptions import DuplicateKeyError, NotFoundError
@@ -12,6 +13,9 @@ from app.controllers import duplicate_error_handler, not_found_error_handler
 from app.dtos.user import UserCreateDTO, UserReadDTO, UserUpdateDTO
 from app.models import PasswordUpdate, User
 from app.repositories.user import UserRepository, provide_user_repo
+
+
+EMAIL_REGEX = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
 class UserController(Controller):
@@ -43,6 +47,14 @@ class UserController(Controller):
         users_repo: UserRepository,
     ) -> User:
         """Create a new user."""
+        payload = data.as_builtins()
+
+        email = payload.get("email")
+        if not email or not EMAIL_REGEX.match(email):
+            raise HTTPException(
+                status_code=400,
+                detail="El email no tiene un formato válido",
+            )
 
         return users_repo.add_with_hashed_password(data)
 
