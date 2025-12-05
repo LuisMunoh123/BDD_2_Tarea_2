@@ -46,7 +46,6 @@ class ReviewController(Controller):
         payload = data.as_builtins()
         rating = payload.get("rating")
 
-        # 🔴 Validar rating 1–5 (requisito del enunciado)
         if rating is None or not (1 <= rating <= 5):
             raise HTTPException(
                 detail="El rating debe estar entre 1 y 5",

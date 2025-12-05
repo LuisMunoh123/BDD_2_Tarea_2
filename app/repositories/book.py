@@ -42,10 +42,7 @@ class BookRepository(SQLAlchemySyncRepository[Book]):
         return self.session.scalars(stmt).all()
 
     def update_stock(self, book_id: int, quantity: int) -> Book:
-        """Actualizar el stock de un libro, validando que no quede negativo.
-
-        Aquí interpretamos que `quantity` es el NUEVO stock.
-        """
+        """Actualizar el stock de un libro, validando que no quede negativo."""
         book = self.session.get(Book, book_id)
         if book is None:
             raise ValueError(f"Book with id {book_id} not found.")

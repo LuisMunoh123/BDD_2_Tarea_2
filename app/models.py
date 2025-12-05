@@ -33,7 +33,6 @@ class User(BigIntAuditBase):
     fullname: Mapped[str] = mapped_column(String, nullable=False)
     password: Mapped[str] = mapped_column(String, nullable=False)
 
-    # Nuevos campos
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     phone: Mapped[str | None] = mapped_column(String, nullable=True)
     address: Mapped[str | None] = mapped_column(String, nullable=True)
